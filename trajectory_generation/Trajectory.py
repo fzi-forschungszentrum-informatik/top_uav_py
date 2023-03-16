@@ -46,6 +46,7 @@ class Trajectory:
         # x-axis
         t_x = 0
         t_seg_x = [r3(elem) for elem in self._t_segments[0]]
+        a_seg_x = self._acceleration_segments[0]
         tVec_x = []
         p_x = []
         v_x = []
@@ -56,36 +57,37 @@ class Trajectory:
         t_ref_x = 0
         while t_x <= t_seg_x[0]:
             tVec_x.append(t_x)
-            p_x.append(p_0_x + (t_x - t_ref_x) * v_0_x + 0.5 * (t_x - t_ref_x) ** 2 * self._acceleration_segments[0][0])
-            v_x.append(v_0_x + (t_x - t_ref_x) * self._acceleration_segments[0][0])
-            a_x.append(self._acceleration_segments[0][0])
+            p_x.append(p_0_x + (t_x - t_ref_x) * v_0_x + 0.5 * (t_x - t_ref_x) ** 2 * a_seg_x[0])
+            v_x.append(v_0_x + (t_x - t_ref_x) * a_seg_x[0])
+            a_x.append(a_seg_x[0])
             t_x = t_x + dt
 
-        v_1_x = v_x[-1]
-        p_1_x = p_x[-1]
-        t_ref_x = tVec_x[-1]
+        p_1_x = p_0_x + v_0_x * t_seg_x[0] + 0.5 * a_seg_x[0] * t_seg_x[0] ** 2
+        v_1_x = v_0_x + a_seg_x[0] * t_seg_x[0]
+        t_ref_x = t_seg_x[0]
         while t_x - t_ref_x > 0 and t_x - t_ref_x <= t_seg_x[1]:
             tVec_x.append(t_x)
             p_x.append(p_1_x + (t_x - t_ref_x) * v_1_x)
             v_x.append(v_1_x)
-            a_x.append(self._acceleration_segments[0][1])
+            a_x.append(a_seg_x[1])
 
             t_x = t_x + dt
 
-        v_2_x = v_x[-1]
-        p_2_x = p_x[-1]
-        t_ref_x = tVec_x[-1]
+        p_2_x = p_1_x + v_1_x * t_seg_x[1] + 0.5 * a_seg_x[1] * t_seg_x[1] ** 2
+        v_2_x = v_1_x + a_seg_x[1] * t_seg_x[1]
+        t_ref_x = t_seg_x[0] + t_seg_x[1]
         while t_x - t_ref_x > 0 and t_x - t_ref_x <= t_seg_x[2]:
             tVec_x.append(t_x)
-            p_x.append(p_2_x + (t_x - t_ref_x) * v_2_x + 0.5 * (t_x - t_ref_x) ** 2 * self._acceleration_segments[0][2])
-            v_x.append(v_2_x + (t_x - t_ref_x) * self._acceleration_segments[0][2])
-            a_x.append(self._acceleration_segments[0][2])
+            p_x.append(p_2_x + (t_x - t_ref_x) * v_2_x + 0.5 * (t_x - t_ref_x) ** 2 * a_seg_x[2])
+            v_x.append(v_2_x + (t_x - t_ref_x) * a_seg_x[2])
+            a_x.append(a_seg_x[2])
 
             t_x = t_x + dt
 
         # y-axis
         t_y = 0
         t_seg_y = [r3(elem) for elem in self._t_segments[1]]
+        a_seg_y = self._acceleration_segments[1]
         tVec_y = []
         p_y = []
         v_y = []
@@ -96,36 +98,37 @@ class Trajectory:
         t_ref_y = 0
         while t_y <= t_seg_y[0]:
             tVec_y.append(t_y)
-            p_y.append(p_0_y + (t_y - t_ref_y) * v_0_y + 0.5 * (t_y - t_ref_y) ** 2 * self._acceleration_segments[1][0])
-            v_y.append(v_0_y + (t_y - t_ref_y) * self._acceleration_segments[1][0])
-            a_y.append(self._acceleration_segments[1][0])
+            p_y.append(p_0_y + (t_y - t_ref_y) * v_0_y + 0.5 * (t_y - t_ref_y) ** 2 * a_seg_y[0])
+            v_y.append(v_0_y + (t_y - t_ref_y) * a_seg_y[0])
+            a_y.append(a_seg_y[0])
             t_y = t_y + dt
 
-        v_1_y = v_y[-1]
-        p_1_y = p_y[-1]
-        t_ref_y = tVec_y[-1]
+        p_1_y = p_0_y + v_0_y * t_seg_y[0] + 0.5 * a_seg_y[0] * t_seg_y[0] ** 2
+        v_1_y = v_0_y + a_seg_y[0] * t_seg_y[0]
+        t_ref_y = t_seg_y[0]
         while t_y - t_ref_y > 0 and t_y - t_ref_y <= t_seg_y[1]:
             tVec_y.append(t_y)
             p_y.append(p_1_y + (t_y - t_ref_y) * v_1_y)
             v_y.append(v_1_y)
-            a_y.append(self._acceleration_segments[1][1])
+            a_y.append(a_seg_y[1])
 
             t_y = t_y + dt
 
-        v_2_y = v_y[-1]
-        p_2_y = p_y[-1]
-        t_ref_y = tVec_y[-1]
+        p_2_y = p_1_y + v_1_y * t_seg_y[1] + 0.5 * a_seg_y[1] * t_seg_y[1] ** 2
+        v_2_y = v_1_y + a_seg_y[1] * t_seg_y[1]
+        t_ref_y = t_seg_y[0] + t_seg_y[1]
         while t_y - t_ref_y > 0 and t_y - t_ref_y <= t_seg_y[2]:
             tVec_y.append(t_y)
-            p_y.append(p_2_y + (t_y - t_ref_y) * v_2_y + 0.5 * (t_y - t_ref_y) ** 2 * self._acceleration_segments[1][2])
-            v_y.append(v_2_y + (t_y - t_ref_y) * self._acceleration_segments[1][2])
-            a_y.append(self._acceleration_segments[1][2])
+            p_y.append(p_2_y + (t_y - t_ref_y) * v_2_y + 0.5 * (t_y - t_ref_y) ** 2 * a_seg_y[2])
+            v_y.append(v_2_y + (t_y - t_ref_y) * a_seg_y[2])
+            a_y.append(a_seg_y[2])
 
             t_y = t_y + dt
 
         # z-axis
         t_z = 0
         t_seg_z = [r3(elem) for elem in self._t_segments[2]]
+        a_seg_z = self._acceleration_segments[2]
         tVec_z = []
         p_z = []
         v_z = []
@@ -136,30 +139,30 @@ class Trajectory:
         t_ref_z = 0
         while t_z <= t_seg_z[0]:
             tVec_z.append(t_z)
-            p_z.append(p_0_z + (t_z - t_ref_z) * v_0_z + 0.5 * (t_z - t_ref_z) ** 2 * self._acceleration_segments[2][0])
-            v_z.append(v_0_z + (t_z - t_ref_z) * self._acceleration_segments[2][0])
-            a_z.append(self._acceleration_segments[2][0])
+            p_z.append(p_0_z + (t_z - t_ref_z) * v_0_z + 0.5 * (t_z - t_ref_z) ** 2 * a_seg_z[0])
+            v_z.append(v_0_z + (t_z - t_ref_z) * a_seg_z[0])
+            a_z.append(a_seg_z[0])
             t_z = t_z + dt
 
-        v_1_z = v_z[-1]
-        p_1_z = p_z[-1]
-        t_ref_z = tVec_z[-1]
+        p_1_z = p_0_z + v_0_z * t_seg_z[0] + 0.5 * a_seg_z[0] * t_seg_z[0] ** 2
+        v_1_z = v_0_z + a_seg_z[0] * t_seg_z[0]
+        t_ref_z = t_seg_z[0]
         while t_z - t_ref_z > 0 and t_z - t_ref_z <= t_seg_z[1]:
             tVec_z.append(t_z)
             p_z.append(p_1_z + (t_z - t_ref_z) * v_1_z)
             v_z.append(v_1_z)
-            a_z.append(self._acceleration_segments[2][1])
+            a_z.append(a_seg_z[1])
 
             t_z = t_z + dt
 
-        v_2_z = v_z[-1]
-        p_2_z = p_z[-1]
-        t_ref_z = tVec_z[-1]
+        p_2_z = p_1_z + v_1_z * t_seg_z[1] + 0.5 * a_seg_z[1] * t_seg_z[1] ** 2
+        v_2_z = v_1_z + a_seg_z[1] * t_seg_z[1]
+        t_ref_z = t_seg_z[0] + t_seg_z[1]
         while t_z - t_ref_z > 0 and t_z - t_ref_z <= t_seg_z[2]:
             tVec_z.append(t_z)
-            p_z.append(p_2_z + (t_z - t_ref_z) * v_2_z + 0.5 * (t_z - t_ref_z) ** 2 * self._acceleration_segments[2][2])
-            v_z.append(v_2_z + (t_z - t_ref_z) * self._acceleration_segments[2][2])
-            a_z.append(self._acceleration_segments[2][2])
+            p_z.append(p_2_z + (t_z - t_ref_z) * v_2_z + 0.5 * (t_z - t_ref_z) ** 2 * a_seg_z[2])
+            v_z.append(v_2_z + (t_z - t_ref_z) * a_seg_z[2])
+            a_z.append(a_seg_z[2])
 
             t_z = t_z + dt
 
