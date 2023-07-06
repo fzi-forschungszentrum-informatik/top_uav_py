@@ -49,44 +49,45 @@ class TrajectoryPlanner:
 
                 if self.version == "sota":
                     return Trajectory(t_LB, None, None, config, waypoint1, waypoint2)
-                sync_possible_x, t_x, pattern_x = self.check_synchronization_possible_axis(t_LB, waypoint1, waypoint2,
-                                                                                           "X", config)
-                sync_possible_y, t_y, pattern_y = self.check_synchronization_possible_axis(t_LB, waypoint1, waypoint2,
-                                                                                           "Y", config)
-                sync_possible_z, t_z, pattern_z = self.check_synchronization_possible_axis(t_LB, waypoint1, waypoint2,
-                                                                                           "Z", config)
-                if sync_possible_x and sync_possible_y and sync_possible_z and t_LB < t_opt_best:
-                    t_opt_best = t_LB
-                    t_x_best = t_x
-                    pattern_x_best = pattern_x
-                    t_y_best = t_y
-                    pattern_y_best = pattern_y
-                    t_z_best = t_z
-                    pattern_z_best = pattern_z
-                    config_best = config
-                else:
-                    t_sync_cand_list = self.get_t_sync_candidates(config, t_LB, waypoint1, waypoint2)
-
-                    for t_sync_cand in t_sync_cand_list:
-                        sync_possible_x, t_x, pattern_x = self.check_synchronization_possible_axis(t_sync_cand,
-                                                                                                   waypoint1, waypoint2,
-                                                                                                   "X", config)
-                        sync_possible_y, t_y, pattern_y = self.check_synchronization_possible_axis(t_sync_cand,
-                                                                                                   waypoint1, waypoint2,
-                                                                                                   "Y", config)
-                        sync_possible_z, t_z, pattern_z = self.check_synchronization_possible_axis(t_sync_cand,
-                                                                                                   waypoint1, waypoint2,
-                                                                                                   "Z", config)
-                        if sync_possible_x and sync_possible_y and sync_possible_z and t_sync_cand < t_opt_best:
-                            t_opt_best = t_sync_cand
-                            t_x_best = t_x
-                            pattern_x_best = pattern_x
-                            t_y_best = t_y
-                            pattern_y_best = pattern_y
-                            t_z_best = t_z
-                            pattern_z_best = pattern_z
-                            config_best = config
-                            break
+                if t_LB < t_opt_best:
+                    sync_possible_x, t_x, pattern_x = self.check_synchronization_possible_axis(t_LB, waypoint1, waypoint2,
+                                                                                               "X", config)
+                    sync_possible_y, t_y, pattern_y = self.check_synchronization_possible_axis(t_LB, waypoint1, waypoint2,
+                                                                                               "Y", config)
+                    sync_possible_z, t_z, pattern_z = self.check_synchronization_possible_axis(t_LB, waypoint1, waypoint2,
+                                                                                               "Z", config)
+                    if sync_possible_x and sync_possible_y and sync_possible_z:
+                        t_opt_best = t_LB
+                        t_x_best = t_x
+                        pattern_x_best = pattern_x
+                        t_y_best = t_y
+                        pattern_y_best = pattern_y
+                        t_z_best = t_z
+                        pattern_z_best = pattern_z
+                        config_best = config
+                    else:
+                        t_sync_cand_list = self.get_t_sync_candidates(config, t_LB, waypoint1, waypoint2)
+                        for t_sync_cand in t_sync_cand_list:
+                            if t_sync_cand < t_opt_best:
+                                sync_possible_x, t_x, pattern_x = self.check_synchronization_possible_axis(t_sync_cand,
+                                                                                                           waypoint1, waypoint2,
+                                                                                                           "X", config)
+                                sync_possible_y, t_y, pattern_y = self.check_synchronization_possible_axis(t_sync_cand,
+                                                                                                           waypoint1, waypoint2,
+                                                                                                           "Y", config)
+                                sync_possible_z, t_z, pattern_z = self.check_synchronization_possible_axis(t_sync_cand,
+                                                                                                           waypoint1, waypoint2,
+                                                                                                           "Z", config)
+                                if sync_possible_x and sync_possible_y and sync_possible_z:
+                                    t_opt_best = t_sync_cand
+                                    t_x_best = t_x
+                                    pattern_x_best = pattern_x
+                                    t_y_best = t_y
+                                    pattern_y_best = pattern_y
+                                    t_z_best = t_z
+                                    pattern_z_best = pattern_z
+                                    config_best = config
+                                    break
 
         if t_opt_best < float('inf'):
             return Trajectory(t_opt_best,
