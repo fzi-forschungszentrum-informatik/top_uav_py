@@ -9,8 +9,13 @@ pip install requirements.txt
 To access the C++ implementation see [top_uav_cpp](https://github.com/fzi-forschungszentrum-informatik/top_uav_cpp).
 
 ## 🍫 Quickstart
-The example in main.py generates time-optimal trajectories according to the state-of-the-art method as well as of our basic generally valid version as well as our version with improved exploitation of kinematic properties.
+The example in main.py generates time-optimal trajectories according to the state-of-the-art method as well as of our basic generally valid version as well as our version with improved exploitation of kinematic properties. 
 
+## Run tests
+To run the test, execute the following from a terminal:
+```shell
+pytest -v tests.py
+```
 
 ## 🏫 Affiliations
 <p align="center">
