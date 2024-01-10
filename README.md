@@ -22,13 +22,14 @@ The example in main.py generates time-optimal trajectories according to the stat
 If you use top_uav_py in your research, please consider citing our original paper. 
 
 ```
-@INPROCEEDINGS{Meyer.2023,
-	author={Meyer, Fabian and Glock, Katharina and Sayah, David}, 
-	booktitle={2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 
-	year={2023},
-	title={TOP-UAV: Open-Source Time-optimal Trajectory Planner for Point-Masses under Acceleration and Velocity Constraints},
-	volume={},
-	issue={}, 
-	pages={tba.}
-}
+@INPROCEEDINGS{10342270,
+  author={Meyer, Fabian and Glock, Katharina and Sayah, David},
+  booktitle={2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 
+  title={TOP-UAV: Open-Source Time-Optimal Trajectory Planner for Point-Masses Under Acceleration and Velocity Constraints}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={2838-2845},
+  doi={10.1109/IROS55552.2023.10342270}}
+
 ```
