@@ -3,7 +3,7 @@ top_uav_py is a Python library to generate 3-dimensional time-optimal trajectori
 
 ## 💈 Installation
 ```shell
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 To access the C++ implementation see [top_uav_cpp](https://github.com/fzi-forschungszentrum-informatik/top_uav_cpp).
